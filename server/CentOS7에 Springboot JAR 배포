@@ -1,0 +1,33 @@
+외장 tomcat 시절에는 배포가 정말 귀찮았다.
+
+export → ROOT.war → ftp 등을 통하여 tomcat webapp 폴더에 배포하는 방식을 사용했다.
+
+물론 이당시에는 CI/CD 도 몰랐고.. 관련 툴도 전혀 몰랐다..
+
+현재는 Jenkins, Travis 등을 통하여 배포 자동화가 있지만
+
+이건 나중에 포스팅을 올려볼 생각이다. 
+
+이번 포스팅에서는 간단하게 배포를 하기 위해서 gradle과 jar 파일을 이용하여 배포를 알아보자.
+
+개인적으로 Springboot로 변경하고나서 jar 파일을 만들고 배포 하는 과정이 매우 간단해졌다고 느낀다.
+
+기존 war(Web Application Archive)에서는 웹 관련 자원만 포함하고 있었으나.. jar(Java Archive)에서는 Java 리소스 속성 파일, 라이브러리 등이 포함 되어있다. 
+
+그래서 Springboot에서는 tomcat 또한 내장이 되어있어서 JRE만 가지고도 실행이 가능하기 때문에 정말 쉽게 배포를 할 수 있다고 생각한다.
+
+jar 파일을 만드는 build 과정은 IDE를 통해서 쉽게 만들 수 있으며 maven/gradle 명령어를 사용하여 매우 쉽게 빌드를 할 수 있다.
+
+(intellij 에서 gradle build 하는 화면)
+
+혹은 터미널에서 
+
+maven은 mvn package
+
+gradle은 gradlew build 
+
+를 입력하면 빌드가 진행되며 jar 파일이 생성이 된다.
+
+(터미널에서 ./gradlew build 화면)
+
+생성된 jar 파일은 프로젝트/build/libs 에 생기는데 이 때 생기는 jar파일로 배포를 정말 쉽게 할 수 있다.
