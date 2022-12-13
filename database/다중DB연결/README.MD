@@ -8,14 +8,21 @@
 - Data JPA
 - QueryDSL 
 
+
 스프링부트로 개발중 외부 DB를 접속해야 할 일이 생겼다.<br>
-구축되어있는 데이터베이스는 MySql인데 외부 DB는 Postgresql 이였다.
+최근에는 대부분 API로 데이터를 주고 받는데 연결해야하는 시스템에서는 제공이 어렵다고 답변이 왔다.
+현재 프로젝트에 구축되어있는 데이터베이스는 MySql인데 외부 DB는 Postgresql 이다.
+
+현재 프로젝트에서는 Spring Data JPA, QueryDSL을 사용중인데 어떻게 다중으로 데이터베이스에 접속을 했는지 알아보자.
 
 > build.gradle 의존성 추가
 
 ```
 runtimeOnly 'org.postgresql:postgresql'
 ```
+
+이부분은 사용 될 sql에 따라 달라질 것이다.
+postgresql을 다중으로 연결하기 위해 의존성을 추가한다.
 
 > application.yml 추가
 
@@ -26,6 +33,8 @@ connpgsql:
     username: DB접속계정 ID
     password: DB접속계정 패스워드
 ```
+
+postgresql jdbc 드라이버를 추가한다.
 
 
 > JdbcMysqlConfig 클래스 추가
@@ -76,6 +85,11 @@ public class JdbcMysqlConfig {
     }
 }
 ```
+
+-> 한개의 데이터베이스를 사용한다면 config를 굳이 만들지 않아도 된다.
+하지만 두 개 이상의 데이터베이스를 사용한다면 어떤 Jdbc를 사용할지 명시를 해줘야 하기 때문에
+config 파일을 만들어주어야 한다.
+먼저 mysql config이다.
 
 
 JdbcPgsqlConfig 클래스 추가
