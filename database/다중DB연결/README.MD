@@ -138,3 +138,8 @@ public class JdbcPgsqlConfig {
         }
 }
 ```
+
+다음은 Postgresql의 config 코드이다.
+각각 커스텀 해야 할 내용은 상황에 맞게 넣으면 된다.
+
+다음으로는 SpringDataJPA와 Repository에서 사용법을 보겠다.
