@@ -9,11 +9,14 @@
 - QueryDSL 
 
 
-스프링부트로 개발중 외부 DB를 접속해야 할 일이 생겼다.<br>
-최근에는 대부분 API로 데이터를 주고 받는데 연결해야하는 시스템에서는 제공이 어렵다고 답변이 왔다.
-현재 프로젝트에 구축되어있는 데이터베이스는 MySql인데 외부 DB는 Postgresql 이다.
+스프링부트로 개발중 외부 DB를 접속해야 할 일이 생겼습니다.<br>
+최근에는 대부분 API로 데이터를 주고 받는데 연결해야하는 시스템(그룹웨어)에서는 제공이 어렵다고 답변이 왔습니다. 
 
-현재 프로젝트에서는 Spring Data JPA, QueryDSL을 사용중인데 어떻게 다중으로 데이터베이스에 접속을 했는지 알아보자.
+(오히려 좋아 짤)
+
+현재 프로젝트에 구축되어있는 데이터베이스는 MySql인데 추가로 연결해야 하는 외부 DB는 Postgresql 입니다.
+
+현재 프로젝트에서는 Spring Data JPA, QueryDSL을 사용중인데 어떻게 다중으로 데이터베이스에 접속을 했는지 알아보죠!
 
 > build.gradle 의존성 추가
 
@@ -21,8 +24,9 @@
 runtimeOnly 'org.postgresql:postgresql'
 ```
 
-이부분은 사용 될 sql에 따라 달라질 것이다.
-postgresql을 다중으로 연결하기 위해 의존성을 추가한다.
+이부분은 사용 될 sql에 따라 달라집니다.
+
+이번 포스팅에서는 postgresql이므로 의존성을 추가해줍니다.
 
 > application.yml 추가
 
@@ -34,7 +38,7 @@ connpgsql:
     password: DB접속계정 패스워드
 ```
 
-postgresql jdbc 드라이버를 추가한다.
+postgresql jdbc 드라이버를 추가합니다.
 
 
 > JdbcMysqlConfig 클래스 추가
@@ -86,13 +90,14 @@ public class JdbcMysqlConfig {
 }
 ```
 
--> 한개의 데이터베이스를 사용한다면 config를 굳이 만들지 않아도 된다.
-하지만 두 개 이상의 데이터베이스를 사용한다면 어떤 Jdbc를 사용할지 명시를 해줘야 하기 때문에
-config 파일을 만들어주어야 한다.
-먼저 mysql config이다.
+한개의 데이터베이스를 사용한다면 config를 굳이 만들지 않아도 됩니다.
+
+하지만 두 개 이상의 데이터베이스를 사용한다면 어떤 Jdbc를 사용할지 명시를 해줘야 하기 때문에 config 파일로 분기 처리를 합니다.
+
+먼저 mysql config 입니다.
 
 
-JdbcPgsqlConfig 클래스 추가
+> JdbcPgsqlConfig 클래스 추가
 
 ```java
 @Configuration
@@ -139,7 +144,10 @@ public class JdbcPgsqlConfig {
 }
 ```
 
-다음은 Postgresql의 config 코드이다.
-각각 커스텀 해야 할 내용은 상황에 맞게 넣으면 된다.
+Postgresql의 config 코드입니다. 
 
-다음으로는 SpringDataJPA와 Repository에서 사용법을 보겠다.
+각각 커스텀 해야 할 내용을 각각 넣어 줍시다.
+
+이제 jdbc config 설정이 끝났으니 실제 사용을 하기 위해서
+
+SpringDataJPA와 Repository 코드를 살펴보겠습니다.
